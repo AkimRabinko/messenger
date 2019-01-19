@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/messenger
+    username: postgres
+    password: admin
+  jooq:
+    sql-dialect: Postgres
+  liquibase:
+    change-log: classpath:liquibase/db.changlog-master.xml

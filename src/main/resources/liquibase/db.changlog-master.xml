@@ -1,0 +1,159 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="Add basic tables" author="Akim">
+        <createTable tableName="user">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="birthday" type="date"/>
+            <column name="first_name" type="character varying (100)" defaultValue="">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="character varying (100)" defaultValue="">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="integer" defaultValue="-1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="integer" defaultValue="-1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="character varying (200)" defaultValue="">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="character varying (200)" defaultValue="">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="article">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="integer" autoIncrement="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="character varying (200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="topic" type="character varying (100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_text" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="tags">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="character varying (100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="article_tags">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tag_id" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="article_id" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="country">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="character varying (100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="city">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="character varying (100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country_id" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="article_images">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="article_id" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image_position_id" type="character varying (100)"/>
+            <column name="name" type="character varying (200)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="article"
+                                 constraintName="user_foreign_key"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseColumnNames="tag_id"
+                                 baseTableName="article_tags"
+                                 constraintName="tags_foreign_key"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tags"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseColumnNames="article_id"
+                                 baseTableName="article_tags"
+                                 constraintName="article_foreign_key"
+                                 referencedColumnNames="id"
+                                 referencedTableName="article"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseColumnNames="country_id"
+                                 baseTableName="city"
+                                 constraintName="country_foreign_key"
+                                 referencedColumnNames="id"
+                                 referencedTableName="country"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseColumnNames="article_id"
+                                 baseTableName="article_images"
+                                 constraintName="article_foreign_key"
+                                 referencedColumnNames="id"
+                                 referencedTableName="article"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseColumnNames="country"
+                                 baseTableName="user"
+                                 constraintName="country_foreign_key"
+                                 referencedColumnNames="id"
+                                 referencedTableName="country"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseColumnNames="city"
+                                 baseTableName="user"
+                                 constraintName="article_foreign_key"
+                                 referencedColumnNames="id"
+                                 referencedTableName="city"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+    </changeSet>
+</databaseChangeLog>
