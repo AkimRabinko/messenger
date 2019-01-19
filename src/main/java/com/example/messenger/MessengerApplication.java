@@ -14,9 +14,9 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class MessengerApplication {
-    public static final String topicExchangeName = "spring-boot-exchange";
-
-    public static final String queueName = "spring-boot";
+    public static final String TOPIC_EXCHANGE_NAME = "spring-boot-exchange";
+    public static final String QUEUE_NAME = "spring-boot";
+    public static final String ROUTING_KEY = "com.example.components";
 
     public static void main(String[] args) {
         SpringApplication.run(MessengerApplication.class, args);
@@ -24,25 +24,24 @@ public class MessengerApplication {
 
     @Bean
     Queue queue() {
-        return new Queue(queueName, false);
+        return new Queue(QUEUE_NAME, false);
     }
 
     @Bean
     TopicExchange exchange() {
-        return new TopicExchange(topicExchangeName);
+        return new TopicExchange(TOPIC_EXCHANGE_NAME);
     }
 
     @Bean
     Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("com.example.#");
+        return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY);
     }
 
     @Bean
-    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
-                                             MessageListenerAdapter listenerAdapter) {
+    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter) {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(queueName);
+        container.setQueueNames(QUEUE_NAME);
         container.setMessageListener(listenerAdapter);
         return container;
     }
