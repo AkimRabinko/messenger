@@ -2,20 +2,22 @@ package com.example.messenger.dto;
 
 import com.example.messenger.model.City;
 import com.example.messenger.model.Country;
-import lombok.AllArgsConstructor;
+import com.example.messenger.model.enums.UserRole;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDate;
 
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Setter
 public class UserRegisterDto {
-    private int age;
+    private LocalDate birthday;
     private String firstName;
     private String lastName;
     private City city;
     private Country country;
     private String email;
     private String password;
+    private UserRole role;
 }

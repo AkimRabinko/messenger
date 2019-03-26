@@ -2,17 +2,16 @@ package com.example.messenger.dao;
 
 import com.example.messenger.dto.UserRegisterDto;
 import com.example.messenger.model.User;
-
-import java.util.List;
+import com.example.messenger.model.enums.UserRole;
 
 public interface UserDao {
-    int create(UserRegisterDto user);
+    int saveUser(UserRegisterDto user);
 
-    int update(UserRegisterDto user);
+    boolean saveRole(int userId, UserRole role);
 
-    User getById(int id);
+    boolean updateUser(User user);
 
-    List<User> getAll();
+    User getUser(int id);
 
-    int delete(int id);
+    boolean deleteUser(int id);
 }
