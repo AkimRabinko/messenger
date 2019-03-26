@@ -156,4 +156,24 @@
                                  onDelete="CASCADE"
                                  onUpdate="CASCADE"/>
     </changeSet>
+
+    <changeSet id="Add roles" author="Akim">
+        <createTable tableName="user_roles">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="integer" autoIncrement="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="character varying (100)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="user_roles"
+                                 constraintName="user_foreign_key"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+    </changeSet>
 </databaseChangeLog>

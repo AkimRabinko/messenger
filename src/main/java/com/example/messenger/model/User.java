@@ -2,14 +2,14 @@ package com.example.messenger.model;
 
 import com.example.messenger.model.enums.UserRole;
 import com.example.messenger.model.enums.UserStatus;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
 
 @Getter
-@Builder
+@Setter
 public class User {
     private int id;
     private Date birthday;
