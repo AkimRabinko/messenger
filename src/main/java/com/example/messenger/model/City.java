@@ -8,5 +8,5 @@ import lombok.Setter;
 public class City {
     private int id;
     private String name;
-    private int country;
+    private int countryId;
 }
