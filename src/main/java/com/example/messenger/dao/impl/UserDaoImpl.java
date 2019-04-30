@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+import static com.example.messenger.dao.impl.DaoUtils.isUpdated;
+
 
 @Repository
 @AllArgsConstructor
@@ -40,18 +42,18 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean saveRole(int userId, UserRole role) {
-        return jdbcTemplate.update(SAVE_ROLE, userId, role.name()) > 0;
+        return isUpdated(jdbcTemplate.update(SAVE_ROLE, userId, role.name()));
     }
 
     @Override
     public boolean updateUser(User user) {
-        return jdbcTemplate.update(UPDATE_USER,
+        return isUpdated(jdbcTemplate.update(UPDATE_USER,
                 user.getBirthday(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getCity().getId(),
                 user.getCountry().getId(),
-                user.getId()) > 0;
+                user.getId()));
     }
 
     @Override
