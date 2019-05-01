@@ -8,6 +8,7 @@ import com.example.messenger.service.TagsService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,37 +22,37 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public boolean saveArticle(Article article) {
-        return false;
+        return articleDao.saveArticle(article);
     }
 
     @Override
     public boolean updateArticle(Article article) {
-        return false;
+        return articleDao.updateArticle(article);
     }
 
     @Override
     public boolean deleteArticle(int id) {
-        return false;
+        return articleDao.deleteArticle(id);
     }
 
     @Override
     public Article getArticleByName(String name) {
-        return null;
+        return articleDao.getArticleByName(name);
     }
 
     @Override
     public List<Article> getArticles(int userId) {
-        return null;
+        return articleDao.getArticles(userId);
     }
 
     @Override
-    public List<Article> getArticles(LocalDateTime date) {
-        return null;
+    public List<Article> getArticles(LocalDate date) {
+        return articleDao.getArticles(date);
     }
 
     @Override
     public List<Article> getArticles(LocalDateTime start, LocalDateTime end) {
-        return null;
+        return articleDao.getArticles(start, end);
     }
 
     @Override

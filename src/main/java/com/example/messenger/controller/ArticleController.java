@@ -5,6 +5,7 @@ import com.example.messenger.service.ArticleService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class ArticleController {
     }
 
     @GetMapping("date")
-    public List<Article> getArticles(LocalDateTime date) {
+    public List<Article> getArticles(LocalDate date) {
         return articleService.getArticles(date);
     }
 

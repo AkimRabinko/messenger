@@ -2,6 +2,7 @@ package com.example.messenger.service;
 
 import com.example.messenger.model.Article;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface ArticleService {
 
     List<Article> getArticles(int userId);
 
-    List<Article> getArticles(LocalDateTime date);
+    List<Article> getArticles(LocalDate date);
 
     List<Article> getArticles(LocalDateTime start, LocalDateTime end);
 

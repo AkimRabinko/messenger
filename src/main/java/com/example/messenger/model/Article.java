@@ -1,13 +1,15 @@
 package com.example.messenger.model;
 
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-@Builder
+@Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Article {
     private int id;
     private int userId;
@@ -15,6 +17,6 @@ public class Article {
     private String topic;
     private List<String> tags;
     private String mainText;
-    private LocalDateTime articleDate;
+    private LocalDateTime creationDate;
     private List<String> images;
 }
