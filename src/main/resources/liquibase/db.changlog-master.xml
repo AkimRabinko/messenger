@@ -176,4 +176,11 @@
                                  onDelete="CASCADE"
                                  onUpdate="CASCADE"/>
     </changeSet>
+    
+    <changeSet id="change_article_colmn_type" author="Akim">
+        <modifyDataType columnName="creation_date"
+                        newDataType="TIMESTAMP"
+                        schemaName="public"
+                        tableName="article"/>
+    </changeSet>
 </databaseChangeLog>
