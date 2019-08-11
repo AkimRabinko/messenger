@@ -4,7 +4,10 @@ import com.example.messenger.dto.UserRegisterDto;
 import com.example.messenger.model.User;
 import com.example.messenger.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 
 @RestController
@@ -31,5 +34,10 @@ public class UserController {
     @DeleteMapping("{id}")
     public boolean deleteUser(@PathVariable int id) {
         return userService.deleteUser(id);
+    }
+
+    @GetMapping
+    public Principal getPrincipal(Principal principal) {
+        return principal;
     }
 }
