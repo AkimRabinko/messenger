@@ -1,7 +1,5 @@
 package com.example.messenger.dto;
 
-import com.example.messenger.model.City;
-import com.example.messenger.model.Country;
 import com.example.messenger.model.enums.UserRole;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,8 +13,8 @@ public class UserRegisterDto {
     private LocalDate birthday;
     private String firstName;
     private String lastName;
-    private City city;
-    private Country country;
+    private int cityId;
+    private int countryId;
     private String email;
     private String password;
     private UserRole role;

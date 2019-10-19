@@ -6,6 +6,8 @@ import com.example.messenger.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 
 @RestController
 @AllArgsConstructor
@@ -14,12 +16,12 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("save")
-    public boolean saveUser(UserRegisterDto user) {
+    public boolean saveUser(@RequestBody UserRegisterDto user) {
        return userService.saveUser(user);
     }
 
     @PutMapping("update")
-    public boolean updateUser(User user) {
+    public boolean updateUser(@RequestBody User user) {
         return userService.updateUser(user);
     }
 
@@ -31,5 +33,10 @@ public class UserController {
     @DeleteMapping("{id}")
     public boolean deleteUser(@PathVariable int id) {
         return userService.deleteUser(id);
+    }
+
+    @GetMapping
+    public Principal getPrincipal(Principal principal) {
+        return principal;
     }
 }

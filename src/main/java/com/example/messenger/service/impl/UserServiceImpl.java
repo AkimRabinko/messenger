@@ -4,9 +4,9 @@ import com.example.messenger.dao.UserDao;
 import com.example.messenger.dto.UserRegisterDto;
 import com.example.messenger.model.User;
 import com.example.messenger.service.UserService;
-import com.example.messenger.util.EncoderUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -18,7 +18,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean saveUser(UserRegisterDto user) {
-        user.setPassword(EncoderUtils.getMd5(user.getPassword()));
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         int userId = userDao.saveUser(user);
         return userId != NOT_SAVED && userDao.saveRole(userId, user.getRole());
     }

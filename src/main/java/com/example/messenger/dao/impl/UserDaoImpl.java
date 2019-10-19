@@ -33,8 +33,8 @@ public class UserDaoImpl implements UserDao {
                         user.getBirthday(),
                         user.getFirstName(),
                         user.getLastName(),
-                        user.getCity().getId(),
-                        user.getCountry().getId(),
+                        user.getCityId(),
+                        user.getCountryId(),
                         user.getEmail(),
                         user.getPassword()))
                 .orElse(-1);
