@@ -1,0 +1,39 @@
+<html lang="en" class="perfect-scrollbar-off" xmlns:th="http://www.springframework.org/schema/jdbc"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" th:href="@{/v2/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{/v2/css/login.css}"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+</head>
+<body class="background">
+<div id="form-login">
+    <form method="POST" action="/log-in-user" style="margin-bottom: 0;">
+        <div class="input-row-container">
+            <div class="input-custom-container">
+                <label class="custom-label" for="username">User Email</label>
+                <input id="username" class="input-custom" type="text" name="username">
+            </div>
+        </div>
+        <div class="input-row-container">
+            <div class="input-custom-container">
+                <label class="custom-label" for="password">Password</label>
+                <input id="password" class="input-custom" type="password" name="password">
+            </div>
+        </div>
+        <div class="input-row-container" style="text-align: right;">
+            <div class="input-custom-container">
+                <input type="submit" value="Login" name="login" id="login" class="custom-button">
+            </div>
+        </div>
+        <div class="input-row-container">
+            <div class="input-custom-container">
+                <a href="/register" class="custom-link">Don't have account? Register now.</a>
+                <a href="#" class="custom-link" style="float: right;">Restore password</a>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
