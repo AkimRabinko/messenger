@@ -4,7 +4,6 @@ import com.example.messenger.dto.UserRegisterDto;
 import com.example.messenger.model.User;
 import com.example.messenger.service.UserService;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -17,12 +16,12 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("save")
-    public boolean saveUser(UserRegisterDto user) {
+    public boolean saveUser(@RequestBody UserRegisterDto user) {
        return userService.saveUser(user);
     }
 
     @PutMapping("update")
-    public boolean updateUser(User user) {
+    public boolean updateUser(@RequestBody User user) {
         return userService.updateUser(user);
     }
 

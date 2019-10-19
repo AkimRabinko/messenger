@@ -14,12 +14,15 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @AllArgsConstructor
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final String[] ALLOWED_PATTERNS = new String[]{"/v2/**", "/register", "/country/all", "/city/country",
+    "/user/save"};
+
     private final DataSource dataSource;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/v2/**").permitAll()
+                .antMatchers(ALLOWED_PATTERNS).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
