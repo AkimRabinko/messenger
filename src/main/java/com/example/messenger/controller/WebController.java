@@ -18,6 +18,6 @@ public class WebController {
 
     @GetMapping("/")
     public String mainPage() {
-        return "index";
+        return "main";
     }
 }

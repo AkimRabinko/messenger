@@ -11,70 +11,78 @@
     <script th:src="@{/v2/js/libs/angular-route.js}"></script>
     <script type="text/javascript" th:src="@{/v2/js/libs/jquery-3.1.1.min.js}"></script>
     <script type="text/javascript" th:src="@{/v2/js/constantUrls.js}"></script>
-    <script type="text/javascript" th:src="@{/v2/js/register.js}"></script>
+    <script type="text/javascript" th:src="@{/v2/js/controllers/registerController.js}"></script>
 </head>
 <body class="background" ng-app="messenger" ng-controller="registerController" ng-init="init()" ng-cloak="">
 <div id="form-register">
-    <div class=input-row-container"input-row-container">
-        <div class="input-custom-container">
-            <label class="custom-label" for="username">User Email</label>
-            <input id="username" class="input-custom" type="text" name="username" ng-model="userData.email">
+    <form>
+        <div class=input-row-container"input-row-container">
+            <div class="input-custom-container">
+                <label class="custom-label" for="username">User Email</label>
+                <input id="username" class="input-custom" type="email" name="username"
+                       ng-model="userData.email" ng-required="true">
+            </div>
         </div>
-    </div>
-    <div class=input-row-container"input-row-container">
-        <div class="input-custom-container">
-            <label class="custom-label" for="first_name">First Name</label>
-            <input id="first_name" class="input-custom" type="text" name="first_name" ng-model="userData.firstName">
+        <div class=input-row-container"input-row-container">
+            <div class="input-custom-container">
+                <label class="custom-label" for="first_name">First Name</label>
+                <input id="first_name" class="input-custom" type="text" name="first_name"
+                       ng-model="userData.firstName" ng-required="true">
+            </div>
         </div>
-    </div>
-    <div class=input-row-container"input-row-container">
-        <div class="input-custom-container">
-            <label class="custom-label" for="last_name">Last Name</label>
-            <input id="last_name" class="input-custom" type="text" name="last_name" ng-model="userData.lastName">
+        <div class=input-row-container"input-row-container">
+            <div class="input-custom-container">
+                <label class="custom-label" for="last_name">Last Name</label>
+                <input id="last_name" class="input-custom" type="text" name="last_name"
+                       ng-model="userData.lastName" ng-required="true">
+            </div>
         </div>
-    </div>
-    <div class=input-row-container"input-row-container">
-        <div class="input-custom-container">
-            <label class="custom-label" for="birthday">Birthday</label>
-            <input id="birthday" class="input-custom" type="date" name="birthday" ng-model="userData.birthday">
+        <div class=input-row-container"input-row-container">
+            <div class="input-custom-container">
+                <label class="custom-label" for="birthday">Birthday</label>
+                <input id="birthday" class="input-custom" type="date" name="birthday"
+                       ng-model="userData.birthday" ng-required="true">
+            </div>
         </div>
-    </div>
-    <div class=input-row-container"input-row-container">
-        <div class="input-custom-container">
-            <label class="custom-label" for="country">Country</label>
-            <select id="country" class="input-custom" ng-model="userData.countryId" ng-change="loadCities();">
-                <option ng-repeat="country in countries" value="{{country.id}}">{{country.name}}</option>
-            </select>
+        <div class=input-row-container"input-row-container">
+            <div class="input-custom-container">
+                <label class="custom-label" for="country">Country</label>
+                <select id="country" class="input-custom"
+                        ng-model="userData.countryId" ng-change="loadCities();" ng-required="true">
+                    <option ng-repeat="country in countries" value="{{country.id}}">{{country.name}}</option>
+                </select>
+            </div>
         </div>
-    </div>
-    <div class=input-row-container"input-row-container">
-        <div class="input-custom-container">
-            <label class="custom-label" for="city">City</label>
-            <select id="city" class="input-custom" ng-model="userData.cityId">
-                <option ng-repeat="city in cities" value="{{city.id}}">{{city.name}}</option>
-            </select>
+        <div class=input-row-container"input-row-container">
+            <div class="input-custom-container">
+                <label class="custom-label" for="city">City</label>
+                <select id="city" class="input-custom" ng-model="userData.cityId" ng-required="true">
+                    <option ng-repeat="city in cities" value="{{city.id}}">{{city.name}}</option>
+                </select>
+            </div>
         </div>
-    </div>
-    <div class=input-row-container"input-row-container">
-        <div class="input-custom-container">
-            <label class="custom-label" for="role">Role</label>
-            <select id="role" class="input-custom" ng-model="userData.role">
-                <option value="BLOGGER">Blogger</option>
-                <option value="USER">User</option>
-            </select>
+        <div class=input-row-container"input-row-container">
+            <div class="input-custom-container">
+                <label class="custom-label" for="role">Role</label>
+                <select id="role" class="input-custom" ng-model="userData.role" ng-required="true">
+                    <option value="BLOGGER">Blogger</option>
+                    <option value="USER">User</option>
+                </select>
+            </div>
         </div>
-    </div>
-    <div class="input-row-container">
-        <div class="input-custom-container">
-            <label class="custom-label" for="password">Password</label>
-            <input id="password" class="input-custom" type="password" name="password" ng-model="userData.password">
+        <div class="input-row-container">
+            <div class="input-custom-container">
+                <label class="custom-label" for="password">Password</label>
+                <input id="password" class="input-custom" type="password" name="password"
+                       ng-model="userData.password" ng-required="true">
+            </div>
         </div>
-    </div>
-    <div class="input-row-container" style="text-align: right;">
-        <div class="input-custom-container">
-            <input type="button" value="Register" class="custom-button" ng-click="register();">
+        <div class="input-row-container" style="text-align: right;">
+            <div class="input-custom-container">
+                <input type="submit" value="Register" class="custom-button" ng-click="register();">
+            </div>
         </div>
-    </div>
+    </form>
 </div>
 </body>
 </html>

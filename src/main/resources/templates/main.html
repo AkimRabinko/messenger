@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <link rel="stylesheet" th:href="@{/v2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/v2/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{/v2/css/themify-icons.css}"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <script th:src="@{/v2/js/libs/angular.js}"></script>
+    <script th:src="@{/v2/js/libs/angular-resource.js}"></script>
+    <script th:src="@{/v2/js/libs/angular-route.js}"></script>
+    <script type="text/javascript" th:src="@{/v2/js/libs/jquery-3.1.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/v2/js/constantUrls.js}"></script>
+    <script type="text/javascript" th:src="@{/v2/js/controllers/mainController.js}"></script>
+</head>
+<body class="background" ng-app="messenger" ng-controller="mainController">
+<header class="custom-header">
+    <div class="options-container">
+        <div class="general-options">
+            <a class="header-option" ng-repeat="option in options" ng-href="{{option.link}}">
+                {{option.text}}
+            </a>
+        </div>
+        <div class="user-options">
+            <button class="header-option header-option-button">
+                <span class="span-custom-with-icon ti-user"></span>
+            </button>
+            <button class="header-option header-option-button">
+                <span class="span-custom-with-icon ti-panel"></span>
+            </button>
+        </div>
+    </div>
+</header>
+<div class="main-body">
+
+</div>
+<footer class="custom-footer">
+
+</footer>
+</body>
+</html>
