@@ -2,13 +2,13 @@ package com.example.messenger.service.impl;
 
 import com.example.messenger.dao.TagsDao;
 import com.example.messenger.service.TagsService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TagsServiceImpl implements TagsService {
     private final TagsDao tagsDao;
 

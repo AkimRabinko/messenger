@@ -3,13 +3,13 @@ package com.example.messenger.service.impl;
 import com.example.messenger.dao.CityDao;
 import com.example.messenger.model.City;
 import com.example.messenger.service.CityService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CityServiceImpl implements CityService {
     private final CityDao cityDao;
 
@@ -30,12 +30,14 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public City getCity(int id) {
-        return cityDao.getCity(id);
+        return cityDao.getCity(id)
+                .orElseThrow();
     }
 
     @Override
     public City getCity(String name) {
-        return cityDao.getCity(name);
+        return cityDao.getCity(name)
+                .orElseThrow();
     }
 
     @Override

@@ -2,13 +2,13 @@ package com.example.messenger.controller;
 
 import com.example.messenger.model.Country;
 import com.example.messenger.service.CountryService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("country")
 public class CountryController {
     private final CountryService countryService;

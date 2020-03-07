@@ -4,65 +4,70 @@ import com.example.messenger.dao.UserDao;
 import com.example.messenger.dto.UserRegisterDto;
 import com.example.messenger.model.User;
 import com.example.messenger.model.enums.UserRole;
-import lombok.AllArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
+import lombok.RequiredArgsConstructor;
+import org.jooq.DSLContext;
+import org.jooq.Record;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 import static com.example.messenger.dao.impl.DaoUtils.isUpdated;
+import static com.example.messenger.jooqData.tables.User.USER;
+import static com.example.messenger.jooqData.tables.UserRoles.USER_ROLES;
 
 
 @Repository
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserDaoImpl implements UserDao {
-    private static final String SAVE_USER = "INSERT INTO public.user " +
-            "(birthday, first_name, last_name, city, country, email, password) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id;";
-    private static final String SAVE_ROLE = "INSERT INTO public.user_roles (user_id, role) VALUES (?, ?);";
-    private static final String UPDATE_USER = "UPDATE public.user SET " +
-            "birthday = ?, first_name = ?, last_name = ?, city = ?, country = ? WHERE id = ?;";
-    private static final String GET_USER = "SELECT * FROM public.user WHERE id = ?;";
-    private static final String DELETE_USER = "DELETE FROM public.user WHERE id = ?;";
-
-    private final JdbcTemplate jdbcTemplate;
+    private final DSLContext dslContext;
 
     @Override
     public int saveUser(UserRegisterDto user) {
-        return Optional.ofNullable(
-                jdbcTemplate.queryForObject(SAVE_USER, Integer.class,
-                        user.getBirthday(),
-                        user.getFirstName(),
-                        user.getLastName(),
-                        user.getCityId(),
-                        user.getCountryId(),
-                        user.getEmail(),
-                        user.getPassword()))
-                .orElse(-1);
+        Record record = dslContext.insertInto(USER)
+                .set(USER.BIRTHDAY, user.getBirthday())
+                .set(USER.FIRST_NAME, user.getFirstName())
+                .set(USER.LAST_NAME, user.getLastName())
+                .set(USER.CITY, user.getCityId())
+                .set(USER.COUNTRY, user.getCountryId())
+                .set(USER.EMAIL, user.getEmail())
+                .set(USER.PASSWORD, user.getPassword())
+                .returning(USER.ID)
+                .fetchOptional()
+                .orElseThrow();
+        return record.getValue(USER.ID);
     }
 
     @Override
     public boolean saveRole(int userId, UserRole role) {
-        return isUpdated(jdbcTemplate.update(SAVE_ROLE, userId, role.name()));
+        return isUpdated(dslContext.insertInto(USER_ROLES)
+                .set(USER_ROLES.USER_ID, userId)
+                .set(USER_ROLES.ROLE, role.name())
+                .execute());
     }
 
     @Override
     public boolean updateUser(User user) {
-        return isUpdated(jdbcTemplate.update(UPDATE_USER,
-                user.getBirthday(),
-                user.getFirstName(),
-                user.getLastName(),
-                user.getCity().getId(),
-                user.getCountry().getId(),
-                user.getId()));
+        return isUpdated(dslContext.update(USER)
+                .set(USER.BIRTHDAY, user.getBirthday())
+                .set(USER.FIRST_NAME, user.getFirstName())
+                .set(USER.LAST_NAME, user.getLastName())
+                .set(USER.CITY, user.getCity().getId())
+                .set(USER.COUNTRY, user.getCountry().getId())
+                .where(USER.ID.eq(user.getId()))
+                .execute());
     }
 
     @Override
-    public User getUser(int id) {
-        return jdbcTemplate.queryForObject(GET_USER, User.class, id);
+    public Optional<User> getUser(int id) {
+        return dslContext.selectFrom(USER)
+                .where(USER.ID.eq(id))
+                .fetchOptionalInto(User.class);
     }
 
     @Override
     public boolean deleteUser(int id) {
-        return jdbcTemplate.update(DELETE_USER, id) > 0;
+        return isUpdated(dslContext.deleteFrom(USER)
+                .where(USER.ID.eq(id))
+                .execute());
     }
 }

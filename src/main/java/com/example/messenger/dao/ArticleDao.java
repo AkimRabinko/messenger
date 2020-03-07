@@ -5,6 +5,7 @@ import com.example.messenger.model.Article;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface ArticleDao {
     boolean saveArticle(Article article);
@@ -13,7 +14,7 @@ public interface ArticleDao {
 
     boolean deleteArticle(int id);
 
-    Article getArticleByName(String name);
+    Optional<Article> getArticleByName(String name);
 
     List<Article> getArticles(int userId);
 

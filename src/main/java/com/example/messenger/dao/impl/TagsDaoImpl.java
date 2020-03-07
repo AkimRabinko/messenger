@@ -1,16 +1,16 @@
 package com.example.messenger.dao.impl;
 
 import com.example.messenger.dao.TagsDao;
-import lombok.AllArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
+import lombok.RequiredArgsConstructor;
+import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TagsDaoImpl implements TagsDao {
-    private final JdbcTemplate jdbcTemplate;
+    private final DSLContext dslContext;
 
     @Override
     public boolean saveTag(String tag) {

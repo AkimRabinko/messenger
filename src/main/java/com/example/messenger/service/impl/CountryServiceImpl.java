@@ -3,13 +3,13 @@ package com.example.messenger.service.impl;
 import com.example.messenger.dao.CountryDao;
 import com.example.messenger.model.Country;
 import com.example.messenger.service.CountryService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CountryServiceImpl implements CountryService {
     private final CountryDao countryDao;
 
@@ -30,7 +30,8 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public Country getCountry(int id) {
-        return countryDao.getCountry(id);
+        return countryDao.getCountry(id)
+                .orElseThrow();
     }
 
     @Override

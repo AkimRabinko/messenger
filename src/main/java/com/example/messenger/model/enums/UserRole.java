@@ -1,10 +1,10 @@
 package com.example.messenger.model.enums;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public enum UserRole {
     ADMIN,
     BLOGGER,

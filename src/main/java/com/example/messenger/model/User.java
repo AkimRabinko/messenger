@@ -2,24 +2,33 @@ package com.example.messenger.model;
 
 import com.example.messenger.model.enums.UserRole;
 import com.example.messenger.model.enums.UserStatus;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import lombok.Builder;
+import lombok.Value;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
-@Getter
-@Setter
+@Value
+@Builder
+@JsonDeserialize(builder = User.UserBuilder.class)
 public class User {
-    private int id;
-    private Date birthday;
-    private UserStatus status;
-    private UserRole role;
-    private String firstName;
-    private String lastName;
-    private City city;
-    private Country country;
-    private String email;
-    private String password;
-    private List<Integer> articles;
+    int id;
+    LocalDate birthday;
+    UserStatus status;
+    UserRole role;
+    String firstName;
+    String lastName;
+    City city;
+    Country country;
+    String email;
+    String password;
+    List<Integer> articles;
+
+    @JsonPOJOBuilder(withPrefix = "")
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class UserBuilder {
+    }
 }

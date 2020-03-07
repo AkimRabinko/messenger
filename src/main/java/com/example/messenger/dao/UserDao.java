@@ -4,6 +4,8 @@ import com.example.messenger.dto.UserRegisterDto;
 import com.example.messenger.model.User;
 import com.example.messenger.model.enums.UserRole;
 
+import java.util.Optional;
+
 public interface UserDao {
     int saveUser(UserRegisterDto user);
 
@@ -11,7 +13,7 @@ public interface UserDao {
 
     boolean updateUser(User user);
 
-    User getUser(int id);
+    Optional<User> getUser(int id);
 
     boolean deleteUser(int id);
 }

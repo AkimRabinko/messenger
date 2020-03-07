@@ -1,13 +1,13 @@
 package com.example.messenger.model.enums;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public enum UserStatus {
     OFFLINE(0),
     ONLINE(1);
 
-    private int value;
+    private final int value;
 }
