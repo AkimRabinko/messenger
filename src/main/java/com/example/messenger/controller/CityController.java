@@ -2,13 +2,13 @@ package com.example.messenger.controller;
 
 import com.example.messenger.model.City;
 import com.example.messenger.service.CityService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("city")
 public class CityController {
     private final CityService cityService;

@@ -1,9 +1,9 @@
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/messenger
-    username: postgres
-    password: admin
+    driver-class-name: @datasource.driver@
+    url: @datasource.url@
+    username: @datasource.login@
+    password: @datasource.password@
   jooq:
     sql-dialect: Postgres
   liquibase:

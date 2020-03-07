@@ -1,16 +1,10 @@
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/messenger
-    username: postgres
-    password: admin
+    driver-class-name: @datasource.driver@
+    url: @datasource.url@
+    username: @datasource.login@
+    password: @datasource.password@
   jooq:
     sql-dialect: Postgres
   liquibase:
     change-log: classpath:liquibase/db.changlog-master.xml
-
-rabbitmq:
-  image: rabbitmq:management
-  ports:
-    - "5672:5672"
-    - "15672:15672"

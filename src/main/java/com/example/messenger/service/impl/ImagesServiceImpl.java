@@ -3,13 +3,13 @@ package com.example.messenger.service.impl;
 import com.example.messenger.dao.ImagesDao;
 import com.example.messenger.dto.ArticleImageDto;
 import com.example.messenger.service.ImagesService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ImagesServiceImpl implements ImagesService {
     private final ImagesDao imagesDao;
 

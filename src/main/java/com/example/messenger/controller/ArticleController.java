@@ -2,7 +2,7 @@ package com.example.messenger.controller;
 
 import com.example.messenger.model.Article;
 import com.example.messenger.service.ArticleService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("article")
 public class ArticleController {
     private final ArticleService articleService;

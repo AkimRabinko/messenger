@@ -5,7 +5,7 @@ import com.example.messenger.model.Article;
 import com.example.messenger.service.ArticleService;
 import com.example.messenger.service.ImagesService;
 import com.example.messenger.service.TagsService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ArticleServiceImpl implements ArticleService {
     private final ImagesService imagesService;
-    private final TagsService tagsServicel;
+    private final TagsService tagsService;
     private final ArticleDao articleDao;
 
 
@@ -37,7 +37,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Article getArticleByName(String name) {
-        return articleDao.getArticleByName(name);
+        return articleDao.getArticleByName(name)
+                .orElseThrow();
     }
 
     @Override

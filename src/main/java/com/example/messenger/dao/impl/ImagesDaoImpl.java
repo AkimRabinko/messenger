@@ -2,16 +2,16 @@ package com.example.messenger.dao.impl;
 
 import com.example.messenger.dao.ImagesDao;
 import com.example.messenger.dto.ArticleImageDto;
-import lombok.AllArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
+import lombok.RequiredArgsConstructor;
+import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ImagesDaoImpl implements ImagesDao {
-    private final JdbcTemplate jdbcTemplate;
+    private final DSLContext dslContext;
 
     @Override
     public boolean saveArticleImage(ArticleImageDto articleImage) {
