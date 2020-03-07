@@ -14,7 +14,7 @@
     <script type="text/javascript" th:src="@{/v2/js/constantUrls.js}"></script>
     <script type="text/javascript" th:src="@{/v2/js/controllers/mainController.js}"></script>
 </head>
-<body class="background" ng-app="messenger" ng-controller="mainController">
+<body class="background" ng-app="messenger" ng-controller="mainController" ng-init="fillData()">
 <header class="custom-header">
     <div class="options-container">
         <div class="general-options">
@@ -33,7 +33,27 @@
     </div>
 </header>
 <div class="main-body">
+    <div class="main-panel-left">
+        <div class="article-block" ng-repeat="article in articles" >
+            <div class="article-header">
+                {{article.name}}
+            </div>
+            <div class="article-info">
+                <div class="article-date">
+                    {{article.creationDate}}
+                </div>
+                <div class="article-tags">
+                    {{article.tags}}
+                </div>
+            </div>
+            <div class="article-text-block">
+                {{article.mainText}}
+            </div>
+        </div>
+    </div>
+    <div class="main-panel-right">
 
+    </div>
 </div>
 <footer class="custom-footer">
 
