@@ -1,6 +1,5 @@
 package com.example.messenger.encryption.aspect;
 
-import com.example.messenger.encryption.annotation.Decrypted;
 import com.example.messenger.encryption.service.EncryptionService;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -14,8 +13,8 @@ import org.springframework.stereotype.Component;
 public class DecryptedAspect {
     private final EncryptionService encryptionService;
 
-    @Around(value = "@annotation(decrypted)")
-    private Object traceMethodCall(ProceedingJoinPoint joinPoint, Decrypted decrypted) throws Throwable {
+    @Around(value = "@annotation(com.example.messenger.encryption.annotation.Decrypted)")
+    private Object decryptionCall(ProceedingJoinPoint joinPoint) throws Throwable {
         Object response = joinPoint.proceed();
         return encryptionService.decrypt(response.toString());
     }

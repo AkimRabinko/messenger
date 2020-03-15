@@ -11,9 +11,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 
 @Slf4j
 @EnableAspectJAutoProxy
@@ -47,14 +50,37 @@ public class MessengerApplication {
 
     @Bean
     public SecretKeySpec secretKeySpec() {
-        return new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), ALGORITHM);
+        try {
+            KeyGenerator kgen = KeyGenerator.getInstance(ALGORITHM);
+            SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG") ;
+            secureRandom.setSeed(key.getBytes(StandardCharsets.UTF_8));
+            kgen.init(128, secureRandom);
+            SecretKey secretKey = kgen.generateKey();
+            byte[] enCodeFormat = secretKey.getEncoded();
+            return new SecretKeySpec(enCodeFormat, ALGORITHM);
+        } catch (Exception e) {
+            log.error("Error during encryption creation");
+            throw new NoSuchBeanDefinitionException(e.getMessage());
+        }
     }
 
     @Bean
-    public Cipher cipher(IvParameterSpec ivParameterSpec, SecretKeySpec secretKeySpec) {
+    public Cipher cipherEncrypt(IvParameterSpec ivParameterSpec, SecretKeySpec secretKeySpec) {
         try {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
+            return cipher;
+        } catch (Exception e) {
+            log.error("Error during encryption creation");
+            throw new NoSuchBeanDefinitionException(e.getMessage());
+        }
+    }
+
+    @Bean
+    public Cipher cipherDecrypt(IvParameterSpec ivParameterSpec, SecretKeySpec secretKeySpec) {
+        try {
+            Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
             return cipher;
         } catch (Exception e) {
             log.error("Error during encryption creation");

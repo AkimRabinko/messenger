@@ -1,7 +1,7 @@
 package com.example.messenger.encryption.service;
 
 public interface EncryptionService {
-    String encrypt(String decrypted);
+    String encrypt(String value);
 
-    String decrypt(String encrypted);
+    String decrypt(String value);
 }
