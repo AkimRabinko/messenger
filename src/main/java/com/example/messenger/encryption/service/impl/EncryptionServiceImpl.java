@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
@@ -18,25 +19,26 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class EncryptionServiceImpl implements EncryptionService {
     /**
-     * @param key should have 16 bytes length
+     * key should have 16 bytes length
      */
     @Value("#{environment.AES_ENCRYPTION_KEY}")
     private String encryptionKey;
 
     private static final int MULTIPLICITY = 16;
+    private static final String SHA_ALGORITHM = "SHA-1";
+    private static final String AES_ALGORITHM = "AES";
     private static final String TRANSFORMATION = "AES/ECB/PKCS5Padding";
 
     private SecretKeySpec secretKey;
-    private byte[] key;
 
     @PostConstruct
     public void before() {
         try {
-            byte[] encryptionKeyBytes = encryptionKey.getBytes("UTF-8");
-            MessageDigest sha = MessageDigest.getInstance("SHA-1");
+            byte[] encryptionKeyBytes = encryptionKey.getBytes(StandardCharsets.UTF_8);
+            MessageDigest sha = MessageDigest.getInstance(SHA_ALGORITHM);
             byte[] hash = sha.digest(encryptionKeyBytes);
-            key = Arrays.copyOf(hash, MULTIPLICITY);
-            secretKey = new SecretKeySpec(key, "AES");
+            byte[] key = Arrays.copyOf(hash, MULTIPLICITY);
+            secretKey = new SecretKeySpec(key, AES_ALGORITHM);
         } catch (Exception e) {
             log.error("Error during secret key creation: ", e);
         }
@@ -47,7 +49,7 @@ public class EncryptionServiceImpl implements EncryptionService {
         try {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-            return new String(Base64.encodeBase64(cipher.doFinal(value.getBytes("UTF-8"))));
+            return new String(Base64.encodeBase64(cipher.doFinal(value.getBytes(StandardCharsets.UTF_8))));
         } catch (Exception e) {
             log.error("Error while encrypting {}: ", value, e);
         }

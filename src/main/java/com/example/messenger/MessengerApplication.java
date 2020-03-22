@@ -12,8 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableAspectJAutoProxy
 @SpringBootApplication
 public class MessengerApplication {
-    private static final String ALGORITHM = "AES";
-    private static final String TRANSFORMATION = "AES/CBC/PKCS5PADDING";
 
     public static void main(String[] args) {
         SpringApplication.run(MessengerApplication.class, args);
