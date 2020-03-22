@@ -18,18 +18,18 @@ public class EncryptedAspect {
     @Around(value = "@annotation(com.example.messenger.encryption.annotation.Encrypted)")
     private Object encryptionValueCall(ProceedingJoinPoint joinPoint) throws Throwable {
         Object[] args = joinPoint.getArgs();
-        return joinPoint.proceed(proceedArgs(args));
+        return joinPoint.proceed(encryptArgs(args));
     }
 
-    private Object[] proceedArgs(Object[] args) {
-        Object[] argsParsed = new Object[args.length];
+    private Object[] encryptArgs(Object[] args) {
+        Object[] argsEncrypted = new Object[args.length];
         for (int i = INTEGER_ZERO; i < args.length; i++) {
             if (i == INTEGER_ZERO) {
-                argsParsed[i] = encodingService.encrypt(args[i].toString());
+                argsEncrypted[i] = encodingService.encrypt(args[i].toString());
             } else {
-                argsParsed[i] = args[i];
+                argsEncrypted[i] = args[i];
             }
         }
-        return argsParsed;
+        return argsEncrypted;
     }
 }
