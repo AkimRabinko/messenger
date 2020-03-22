@@ -17,7 +17,7 @@ public class UserController {
 
     @PostMapping("save")
     public boolean saveUser(@RequestBody UserRegisterDto user) {
-       return userService.saveUser(user);
+        return userService.saveUser(user);
     }
 
     @PutMapping("update")

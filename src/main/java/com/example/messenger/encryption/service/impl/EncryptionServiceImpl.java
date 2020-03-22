@@ -4,28 +4,52 @@ import com.example.messenger.encryption.service.EncryptionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.crypto.Cipher;
-
-import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.MessageDigest;
+import java.util.Arrays;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class EncryptionServiceImpl implements EncryptionService {
-    private static final int MULTIPLICITY = 16;
+    /**
+     * @param key should have 16 bytes length
+     */
+    @Value("#{environment.AES_ENCRYPTION_KEY}")
+    private String encryptionKey;
 
-    private final Cipher cipherEncrypt;
-    private final Cipher cipherDecrypt;
+    private static final int MULTIPLICITY = 16;
+    private static final String TRANSFORMATION = "AES/ECB/PKCS5Padding";
+
+    private SecretKeySpec secretKey;
+    private byte[] key;
+
+    @PostConstruct
+    public void before() {
+        try {
+            byte[] encryptionKeyBytes = encryptionKey.getBytes("UTF-8");
+            MessageDigest sha = MessageDigest.getInstance("SHA-1");
+            byte[] hash = sha.digest(encryptionKeyBytes);
+            key = Arrays.copyOf(hash, MULTIPLICITY);
+            secretKey = new SecretKeySpec(key, "AES");
+        } catch (Exception e) {
+            log.error("Error during secret key creation: ", e);
+        }
+    }
 
     @Override
     public String encrypt(String value) {
         try {
-            byte[] encrypted = cipherEncrypt.doFinal(value.getBytes());
-            return Base64.encodeBase64String(encrypted);
+            Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            return new String(Base64.encodeBase64(cipher.doFinal(value.getBytes("UTF-8"))));
         } catch (Exception e) {
-            log.error("Error during string encryption {}", value, e);
+            log.error("Error while encrypting {}: ", value, e);
         }
         return value;
     }
@@ -33,47 +57,12 @@ public class EncryptionServiceImpl implements EncryptionService {
     @Override
     public String decrypt(String value) {
         try {
-            StringBuilder result = new StringBuilder();
-            byte[][] decryptData = getDecryptData(Base64.decodeBase64(value));
-            for (int i = 0; i < decryptData.length; i++) {
-                if ((i + 1) != decryptData.length) {
-                    byte[] original = cipherDecrypt.update(decryptData[i]);
-                    result.append(new String(original));
-                } else {
-                    byte[] original = cipherDecrypt.doFinal(decryptData[i]);
-                    result.append(new String(original));
-                }
-            }
-            return result.toString();
+            Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            return new String(cipher.doFinal(Base64.decodeBase64(value)));
         } catch (Exception e) {
-            log.error("Error during string decrypt {}", value, e);
+            log.error("Error while decrypting {}: ", value, e);
         }
         return value;
-    }
-
-    private byte[][] getDecryptData(byte[] arr) {
-        int blocksNUmber = getBumOfBlocks(arr);
-        byte[][] resultArr = new byte[blocksNUmber][MULTIPLICITY];
-
-        for (int i = INTEGER_ZERO; i < blocksNUmber; i++) {
-            int start = i * MULTIPLICITY;
-            int end = (i + 1) * MULTIPLICITY;
-            resultArr[i] = getArray(arr, start, end);
-        }
-        return resultArr;
-    }
-
-    private int getBumOfBlocks(byte[] arr) {
-        int blocksNumber = arr.length / MULTIPLICITY;
-        return blocksNumber == INTEGER_ZERO ? 1 : blocksNumber;
-    }
-
-    private byte[] getArray(byte[] arr, int start, int end) {
-        byte[] arrPart = new byte[MULTIPLICITY];
-        int length = Math.min(arr.length, end) - start;
-        if (length >= 0) {
-            System.arraycopy(arr, start, arrPart, start, length);
-        }
-        return arrPart;
     }
 }
